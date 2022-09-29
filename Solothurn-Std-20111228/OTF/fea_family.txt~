@@ -1,0 +1,213 @@
+#feature.family
+
+# ---Language
+
+languagesystem DFLT dflt;
+
+languagesystem latn dflt;
+
+
+# --- glyph groupings
+   
+@LETTERS_UC = [
+A - Z AE Lslash Oslash OE Thorn Eth Aacute Acircumflex Adieresis Agrave Aring Atilde Ccedilla Eacute Ecircumflex Edieresis Egrave Iacute Icircumflex Idieresis Igrave Ntilde Oacute Ocircumflex Odieresis Ograve Otilde Scaron Uacute Ucircumflex Udieresis Ugrave Yacute Ydieresis Zcaron
+];
+
+@ACCENTS_LC = [
+acute breve caron cedilla circumflex dieresis dotaccent grave hungarumlaut macron ogonek ring tilde
+];
+
+@LETTERS_LC = [
+a - z ae lslash oslash oe thorn eth aacute acircumflex adieresis agrave aring atilde ccedilla eacute ecircumflex edieresis egrave iacute icircumflex idieresis igrave ntilde oacute ocircumflex odieresis ograve otilde scaron uacute ucircumflex udieresis ugrave yacute ydieresis zcaron
+];
+
+@PUNCT_DEFAULT = [
+ampersand exclam exclamdown question questiondown
+];
+
+@PUNCT_DEFAULT2 = [
+asterisk braceleft braceright bracketleft bracketright bullet colon comma copyright ellipsis guillemotleft guillemotright guilsinglleft guilsinglright hyphen parenleft parenright percent periodcentered period quotedblbase quotedblleft quotedblright quotedbl quoteleft quoteright quotesinglbase quotesingle registered semicolon slash trademark
+];
+
+@FIG_TAB_LINING = [
+zero one two three four five six seven eight nine
+];
+
+@FIGURES = [
+@FIG_TAB_LINING
+];
+
+@FRACTION = [
+fraction slash
+];
+
+@CURRENCY_LINING = [
+dollar cent sterling yen florin Euro
+];
+
+@CURRENCY_LINING3 = [
+dollar cent sterling yen florin Euro
+];
+
+@MISC_LINING = [
+period comma cent dollar parenleft parenright hyphen
+];
+
+
+# --- FEATURE SUMMARY
+# --- Substitution
+#     aalt: access all alternates
+#     sups: makes numbers superior
+#     numr: replaces selected figures with numerators
+#     dnom: replaces selected figures with denominators
+#     dpng: standard diphthongs replacement
+#     frac: substitutes the existing fractions
+#     liga: standard lig replacement
+#     dlig: discretionary ligatures
+#     ordn: subs ordinal glyphs after numbers
+#     zero: slashed zero
+#
+# --- Positioning
+#     kern: pairs in simple and class form
+#     cpsp: wider spacing for caps in all-cap setting
+
+# --- SUBSTITUTION
+
+feature aalt {
+   sub hyphen from [endash emdash minus figuredash];
+
+   sub period from [ellipsis onedotenleader twodotenleader];
+
+   sub a by ordfeminine; 
+   sub o by ordmasculine;
+
+   feature rlig;
+   feature hist;
+   feature onum;
+   feature sups;
+   feature numr;
+   feature dnom;
+   feature zero;
+   feature titl;
+   feature ordn;
+   feature ss01;
+} aalt;
+
+feature numr {
+   sub slash by fraction;
+} numr;
+
+feature dnom {
+   sub slash by fraction;
+} dnom;
+
+feature ordn {
+ sub @FIGURES a' by ordfeminine;
+ sub @FIGURES o' by ordmasculine;
+ sub @FIGURES period a' by ordfeminine;
+ sub @FIGURES period o' by ordmasculine;
+} ordn;
+
+feature frac {
+ sub zero' @FRACTION' zero' zero' by perthousand;
+ sub zero' @FRACTION' zero' by percent;
+ sub one' @FRACTION' four' by onequarter;
+ sub one' @FRACTION' two' by onehalf;
+ sub three' @FRACTION' four' by threequarters;
+} frac;
+
+feature liga {
+	script DFLT;
+		language dflt;
+		lookup FI_LIGS {
+			sub f f i by f_f_i;
+			sub f i by f_i;
+		} FI_LIGS;
+   		lookup NOFI {
+      		sub f f l by f_f_l;
+      		sub f f by f_f;
+      		sub f l by f_l;
+		} NOFI;
+
+	script latn;
+		language dflt;
+			lookup FI_LIGS;
+			lookup NOFI;
+
+} liga;
+
+feature dlig {
+	script DFLT;
+		language dflt;
+		lookup dlig_dflt {
+			sub c t by c_t;
+			sub s t by s_t;
+			sub s p by s_p;
+		} dlig_dflt;
+
+	script latn;
+		language dflt;
+		lookup dlig_dflt;
+
+} dlig;
+
+feature hist {
+	sub s by longs;
+} hist;
+
+feature hlig {
+	script DFLT;
+		language dflt;
+		lookup hlig_dflt {
+			sub longs t by longs_t;
+		} hlig_dflt;
+
+	script latn;
+		language dflt;
+		lookup hlig_dflt;
+} hlig;
+
+feature rlig {
+	script DFLT;
+		language dflt;
+		lookup rlig_dflt {
+    sub A E by AE;
+    sub A e by AE;
+    sub O E by OE;
+    sub O e by OE;
+    sub a e by ae;
+    sub o e by oe;
+		} rlig_dflt;
+
+	script latn;
+		language dflt;
+		lookup rlig_dflt;
+} rlig;
+
+table name {
+   nameid 0 "Copyright \00a9 Arkandis Digital Foundry under the GNU General Public License V2 and later, with font exception.";
+   nameid 0 1 "Copyright \a9 Arkandis Digital Foundry under the GNU General Public License V2 and later, with font exception.";
+   nameid 7 "Solothurn is a trademark of ADF."; #Windows
+   nameid 7 1 "Solothurn is a trademark of ADF."; #Mac
+   nameid 8 "Arkandis Digital Foundry."; #Windows
+   nameid 8 1 "Arkandis Digital Foundry."; #Mac
+   nameid 9 "Hirwen HARENDAL"; #Windows
+   nameid 9 1 "Hirwen HARENDAL"; #Mac
+   nameid 10 ""; #Windows
+   nameid 10 1 ""; #Mac
+   nameid 11 "http://arkandis.tuxfamily.org"; #Windows site link
+   nameid 11 1 "http://arkandis.tuxfamily.org"; #Mac
+   nameid 12 "http://arkandis.tuxfamily.org"; #Windows designer link
+   nameid 12 1 "http://arkandis.tuxfamily.org"; #Mac
+   nameid 13 "The use of this font is granted subject to the GNU General Public License with font exception.";
+   nameid 13 1 "The use of this font is granted subject to the GNU General Public License with font exception.";
+   nameid 14 "http://www.gnu.org/licenses/";
+   nameid 14 1 "http://www.gnu.org/licenses/";
+} name;
+
+table BASE {
+   HorizAxis.BaseTagList ideo romn;
+   HorizAxis.BaseScriptList
+		DFLT romn -150 0,
+		latn romn -150 0; # (CapHeight-UPM)/2
+} BASE;
